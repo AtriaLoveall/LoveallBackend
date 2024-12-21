@@ -5,6 +5,7 @@ import verifyOtp from '../controllers/users/verifyOtpController.js'
 import forgetPassword from '../controllers/forgetPassword.controller.js';
 import sendOTP from '../controllers/sendOTP.controller.js';
 import login from '../controllers/login.controller.js';
+import whoAmI from '../controllers/users/whoAmI.controller.js';
 
 const router = Router(); // Instantiate the Router
 
@@ -14,6 +15,7 @@ router.post('/login', login)
 router.post('/forget-password', forgetPassword)      // Forget password Route
 router.post('/verify-otp', verifyOtp)
 router.post('/send-otp', sendOTP)
+router.get('/whoami', whoAmI);
 
 // Export the router as the default export
 export default router;
