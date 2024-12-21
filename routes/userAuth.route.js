@@ -5,7 +5,7 @@ import verifyOtp from '../controllers/users/verifyOtpController.js'
 import forgetPassword from '../controllers/forgetPassword.controller.js';
 import sendOTP from '../controllers/sendOTP.controller.js';
 import login from '../controllers/login.controller.js';
-import whoAmI from '../controllers/users/whoAmI.controller.js';
+import whoAmI from '../controllers/whoAmI.controller.js';
 
 const router = Router(); // Instantiate the Router
 

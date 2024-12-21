@@ -1,5 +1,5 @@
-import { User, Business, Admin} from "../../models/association.js";
-import { verifyJWT } from "../../services/jwt.js";
+import { User, Business, Admin} from "../models/association.js";
+import { verifyJWT } from "../services/jwt.js";
 const WhoAmI = async (req, res) => {
     const authorization = req.headers['authorization'];
     if (!authorization) {
@@ -16,6 +16,7 @@ const WhoAmI = async (req, res) => {
         if (decoded.type === 'user' && user) {
             return res.status(200).json({
                 message: "User authenticated",
+                id: decoded.id,
                 redirectTo: "/"
             });
         }
@@ -23,6 +24,7 @@ const WhoAmI = async (req, res) => {
         if (decoded.type === 'business' && business) {
             return res.status(200).json({
                 message: "Business authenticated",
+                id: decoded.id,
                 redirectTo: "/business"
             });
         }
@@ -30,6 +32,7 @@ const WhoAmI = async (req, res) => {
         if (decoded.type === 'admin' && admin) {
             return res.status(200).json({
                 message: "Admin authenticated",
+                id: decoded.id,
                 redirectTo: "/admin"
             });
         }
