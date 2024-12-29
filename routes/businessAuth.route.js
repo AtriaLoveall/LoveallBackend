@@ -63,7 +63,7 @@ router.get('/stores/:store_id', businessAuthMiddleware, getStoreDetails);
 router.put('/stores/:store_id', businessAuthMiddleware, updateStoreDetails);
 
 // download routes
-router.get('/download-transactions', businessAuthMiddleware, downloadInvoices);
+router.get('/download-invoices', businessAuthMiddleware, downloadInvoices);
 router.get('/export-csv', businessAuthMiddleware, exportCSV);
 
 export default router;

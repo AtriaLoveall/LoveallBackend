@@ -107,25 +107,43 @@ const exportTransactionsCSV = async (req, res) => {
 
 const downloadInvoices = async (req, res) => {
     try {
+        // Retrieve all transactions with non-null invoice_path
         const transactions = await OfferTransaction.findAll({
-            where: {
-                invoice_path: {
-                    [Op.ne]: null
+            include: [
+                {
+                    model: Store,
+                    attributes: ['store_name'],
+                    required: false
                 }
-            }
+            ],
+            order: [['transaction_date', 'DESC']] // Optional, if you want to sort the transactions
         });
 
+        if (transactions.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'No invoices found for download'
+            });
+        }
+
+        // Create a zip archive for invoices
         const archive = archiver('zip');
-        res.attachment('invoices.zip');
+        const fileName = 'invoices.zip';
+        res.attachment(fileName); // Triggers the download in Postman/Browser
         archive.pipe(res);
 
+        // Loop through the transactions and add the invoices to the zip
         for (const transaction of transactions) {
             const invoicePath = path.join(process.cwd(), transaction.invoice_path);
             if (fs.existsSync(invoicePath)) {
+                // Adding the invoice to the zip file with the name 'invoice_{transaction_id}.pdf'
                 archive.file(invoicePath, { name: `invoice_${transaction.transaction_id}.pdf` });
+            } else {
+                console.warn(`Invoice not found for transaction ID: ${transaction.transaction_id}`);
             }
         }
 
+        // Finalize the archive (end the stream)
         await archive.finalize();
     } catch (error) {
         console.error('Error downloading invoices:', error);
