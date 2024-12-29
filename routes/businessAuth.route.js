@@ -28,6 +28,8 @@ import {
   getStoreDetails,
   updateStoreDetails
 } from '../controllers/business/businessProfileStoreEdit.controller.js';
+import { exportCSV } from '../controllers/business/transaction.controller.js';
+import { downloadInvoices } from '../controllers/admin/transactionAdminController.js';
 
 const router = Router();
 
@@ -59,6 +61,10 @@ router.delete('/stores/:store_id', businessAuthMiddleware, deleteStore);
 // Store edit routes
 router.get('/stores/:store_id', businessAuthMiddleware, getStoreDetails);
 router.put('/stores/:store_id', businessAuthMiddleware, updateStoreDetails);
+
+// download routes
+router.get('/download-transactions', businessAuthMiddleware, downloadInvoices);
+router.get('/export-csv', businessAuthMiddleware, exportCSV);
 
 export default router;
 
