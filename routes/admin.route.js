@@ -24,7 +24,7 @@ router.get('/user-accounts/:userId', adminAuthMiddleware, getUserDetails);
 
 // Dashboard route
 router.get('/dashboard', adminAuthMiddleware, getDashboardData);
-router.post('/remove-business', adminAuthMiddleware, removeBusiness);
+router.delete('/remove-business', adminAuthMiddleware, removeBusiness);
 
 export default router;
 
